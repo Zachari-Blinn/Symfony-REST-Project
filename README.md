@@ -16,4 +16,21 @@ This project is an REST API whit Symfony for Epitech school
 1. Clone this repo in local `git clone https://github.com/Zachari-Blinn/Symfony-REST-Project`
 2. Move to api directory `cd ./api`
 3. Install dependencies `composer update`
-4. start the project with `symfony serve -d --no-tls`
+4. Create Database `php bin/console doctrine:database:create`
+5. start the project with `symfony serve -d --no-tls`
+
+## Commands
+Launch Symfony
+```md
+symfony serve -d --no-tls
+```
+
+Create DataBase
+```md
+php bin/console doctrine:database:create
+```
+
+Create Entity
+```md
+php bin/console make:entity
+```
