@@ -5,7 +5,7 @@
 This project is an REST API whit Symfony for Epitech school
 
 ## Prerequisite
-- php version 7.4.16 (installable avec xampp)
+- php version 7.4.16 (installable with xampp)
 - xampp version 3.2.4
 - Composer version 2.0.11
 - Symfony cli version 4.23.2
