@@ -34,3 +34,11 @@ Create Entity
 ```md
 php bin/console make:entity
 ```
+
+Make Migration
+```md
+php bin/console make:migration
+```
+```md
+php bin/console doctrine:migrations:migrate
+```
