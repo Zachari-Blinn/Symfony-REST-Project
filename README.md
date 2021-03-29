@@ -6,4 +6,5 @@
 - Symfony cli version 4.23.2
 - Symfony version 5.2
 - Api plateform version 2.6.3
+- MariaDB version 10.4.18
 - [En attente] Vue js 2.0
