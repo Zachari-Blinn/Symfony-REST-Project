@@ -1,5 +1,9 @@
 # Symfony-REST-Project
 
+## Description
+
+This project is an REST API whit Symfony for Epitech school
+
 ## Prerequisite
 - php version 7.4.16 (installable avec xampp)
 - xampp version 3.2.4
