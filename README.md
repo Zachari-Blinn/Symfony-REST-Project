@@ -42,3 +42,7 @@ php bin/console make:migration
 ```md
 php bin/console doctrine:migrations:migrate
 ```
+or
+```md
+php bin/console doctrine:schema:update --force
+```
