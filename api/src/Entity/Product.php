@@ -22,7 +22,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -37,7 +37,7 @@ class Product
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products")
+     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products", cascade="persist")
      */
     private $orders;
 
