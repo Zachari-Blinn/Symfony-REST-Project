@@ -25,6 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  *          },
  *          "add_product"={
  *              "method"="POST",
+ *              "input"=false,
  *              "path"="/cart/{id}",
  *              "controller"=App\Controller\AddProduct::class,
  *              "read"=false,

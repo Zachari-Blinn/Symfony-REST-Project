@@ -40,14 +40,18 @@ class ValidateCart
 
     $order = new Order();
     $order->setAuthor($user);
-    $order->setTotalPrice(0);
 
     $cart = $cartRepository->findOneBy(['user' => $user]);
 
+    $totalPrice = 0;
+
     foreach ($cart->getProduct() as $product) {
+      $totalPrice = $totalPrice + $product->getPrice();
       $order->addProduct($product);
       $cart->removeProduct($product);
     }
+
+    $order->setTotalPrice($totalPrice);
 
     $this->_entityManager->persist($cart);
     $this->_entityManager->persist($order);

@@ -58,8 +58,6 @@ class Product
 
     /**
      * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products", cascade="persist")
-     * 
-     * @Groups({"product:read", "product:write"})
      */
     private $orders;
 
