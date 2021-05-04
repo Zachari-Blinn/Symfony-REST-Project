@@ -16,7 +16,25 @@ use Doctrine\ORM\Mapping as ORM;
  *      itemOperations={
  *          "get",
  *          "put",
- *          "patch"
+ *          "patch",
+ *          "validate_cart"={
+ *              "method"="GET",
+ *              "path"="/cart/validate",
+ *              "controller"=App\Controller\ValidateCart::class,
+ *              "read"=false
+ *          },
+ *          "add_product"={
+ *              "method"="POST",
+ *              "path"="/cart/{id}",
+ *              "controller"=App\Controller\AddProduct::class,
+ *              "read"=false,
+ *          },
+ *          "remove_product"={
+ *              "method"="DELETE",
+ *              "path"="/cart/{id}",
+ *              "controller"=App\Controller\RemoveProduct::class,
+ *              "read"=false
+ *          },
  *      },
  *  )
  * @ORM\Entity(repositoryClass=CartRepository::class)
