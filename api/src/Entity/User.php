@@ -86,6 +86,8 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="user", cascade={"persist", "remove"})
+     * 
+     * @Groups({"user:read", "user:write"})
      */
     private $cart;
 

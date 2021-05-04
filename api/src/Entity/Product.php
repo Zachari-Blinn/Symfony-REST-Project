@@ -12,7 +12,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *      normalizationContext={"groups"={"product:read"}},
- *      denormalizationContext={"groups"={"product:write"}}
+ *      denormalizationContext={"groups"={"product:write"}},
+ *      collectionOperations={
+ *          "get", "post"
+ *      },
+ *      itemOperations={
+ *          "get",
+ *          "put",
+ *          "patch",
+ *          "add_product"={
+ *              "method"="GET",
+ *              "path"="/cart/{id}",
+ *              "controller"=App\Controller\AddProduct::class,
+ *              "read"=false
+ *          },
+ *      },
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
