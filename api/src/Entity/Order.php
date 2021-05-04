@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"order:read"}},
+ *      denormalizationContext={"groups"={"order:write"}}
+ * )
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
  */
@@ -19,32 +23,61 @@ class Order
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("order:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * 
+     * @Groups("order:read")
      */
     private $totalPrice;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Groups("order:read")
      */
     private $creationDate;
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="orders")
+     * 
+     * @Groups({"order:read", "order:write"})
      */
     private $products;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups("article:read")
+     */
+    private $author;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->creationDate = new \DateTime();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 
     public function getTotalPrice(): ?float

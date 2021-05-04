@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"product:read"}},
+ *      denormalizationContext={"groups"={"product:write"}}
+ * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
@@ -18,31 +22,43 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("product:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * 
+     * @Groups({"product:read", "product:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"product:read", "product:write"})
      */
     private $photo;
 
     /**
      * @ORM\Column(type="float")
+     * 
+     * @Groups({"product:read", "product:write"})
      */
     private $price;
 
     /**
      * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products", cascade="persist")
+     * 
+     * @Groups({"product:read", "product:write"})
      */
     private $orders;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"product:read", "product:write"})
      */
     private $description;
 
