@@ -30,7 +30,7 @@ class ValidateCart
   /**
    * converting the cart to an order
    *
-   * @return void
+   * @return order
    */
   public function __invoke()
   {
@@ -60,5 +60,6 @@ class ValidateCart
     } else {
       throw new Error("Cart cannot be empty!");
     }
+    return $order;
   }
 }
