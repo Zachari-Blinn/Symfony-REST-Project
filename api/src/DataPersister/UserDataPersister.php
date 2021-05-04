@@ -3,6 +3,7 @@
 
 namespace App\DataPersister;
 
+use App\Entity\Cart;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
@@ -37,6 +38,10 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
      */
     public function persist($data, array $context = [])
     {
+        $cart = new Cart();
+        $cart->setUser($data);
+        $data->setCart($cart);
+        
         if ($data->getPlainPassword()) {
             $data->setPassword(
                 $this->_passwordEncoder->encodePassword(
@@ -48,6 +53,7 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
             $data->eraseCredentials();
         }
 
+        $this->_entityManager->persist($cart);
         $this->_entityManager->persist($data);
         $this->_entityManager->flush();
     }

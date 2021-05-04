@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Cart;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -15,7 +16,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 /**
  * @ApiResource(
  *      normalizationContext={"groups"={"user:read"}},
- *      denormalizationContext={"groups"={"user:write"}}
+ *      denormalizationContext={"groups"={"user:write"}},
+ *      collectionOperations={
+ *          "post"={
+ *              "path"="register"
+ *          }
+ *      }
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -51,8 +57,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Groups("user:write")
      * @SerializedName("password")
+     * 
+     * @Groups("user:write")
      */
     private $plainPassword;
 
@@ -76,6 +83,11 @@ class User implements UserInterface
      * @Groups("user:read")
      */
     private $orders;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $cart;
 
     public function __construct()
     {
@@ -175,6 +187,21 @@ class User implements UserInterface
     }
 
     /**
+     * @see UserInterface
+     */
+    public function getPlainPassword(): string
+    {
+        return (string) $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $password): self
+    {
+        $this->plainPassword = $password;
+
+        return $this;
+    }
+
+    /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
      *
@@ -214,6 +241,28 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($cart === null && $this->cart !== null) {
+            $this->cart->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($cart !== null && $cart->getUser() !== $this) {
+            $cart->setUser($this);
+        }
+
+        $this->cart = $cart;
 
         return $this;
     }
