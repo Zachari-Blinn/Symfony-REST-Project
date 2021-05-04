@@ -63,6 +63,9 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
      */
     public function remove($data, array $context = [])
     {
+        $relatedCart = $data->getCart();
+
+        $this->_entityManager->remove($relatedCart);
         $this->_entityManager->remove($data);
         $this->_entityManager->flush();
     }
