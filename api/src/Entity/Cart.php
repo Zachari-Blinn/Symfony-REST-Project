@@ -11,30 +11,33 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(
  *      collectionOperations={
- *          "get"
+ *          "get",
+ *          "validate_cart"={
+ *              "method"="GET",
+ *              "path"="/cart/validate",
+ *              "controller"=App\Controller\ValidateCart::class,
+ *              "read"=false,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *          },
  *      },
  *      itemOperations={
  *          "get",
  *          "put",
  *          "patch",
- *          "validate_cart"={
- *              "method"="GET",
- *              "path"="/cart/validate",
- *              "controller"=App\Controller\ValidateCart::class,
- *              "read"=false
- *          },
  *          "add_product"={
  *              "method"="POST",
  *              "input"=false,
  *              "path"="/cart/{id}",
  *              "controller"=App\Controller\AddProduct::class,
  *              "read"=false,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
  *          },
  *          "remove_product"={
  *              "method"="DELETE",
  *              "path"="/cart/{id}",
  *              "controller"=App\Controller\RemoveProduct::class,
- *              "read"=false
+ *              "read"=false,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
  *          },
  *      },
  *  )

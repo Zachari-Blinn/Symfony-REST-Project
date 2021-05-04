@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Error;
 use App\Entity\Cart;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,6 @@ class ValidateCart
   /**
    * converting the cart to an order
    *
-   * @param [type] $id
    * @return void
    */
   public function __invoke()
@@ -43,18 +43,22 @@ class ValidateCart
 
     $cart = $cartRepository->findOneBy(['user' => $user]);
 
-    $totalPrice = 0;
+    if(!$cart->getProduct()->isEmpty()) {
+      $totalPrice = 0;
 
-    foreach ($cart->getProduct() as $product) {
-      $totalPrice = $totalPrice + $product->getPrice();
-      $order->addProduct($product);
-      $cart->removeProduct($product);
+      foreach ($cart->getProduct() as $product) {
+        $totalPrice = $totalPrice + $product->getPrice();
+        $order->addProduct($product);
+        $cart->removeProduct($product);
+      }
+  
+      $order->setTotalPrice($totalPrice);
+  
+      $this->_entityManager->persist($cart);
+      $this->_entityManager->persist($order);
+      $this->_entityManager->flush();
+    } else {
+      throw new Error("Cart cannot be empty!");
     }
-
-    $order->setTotalPrice($totalPrice);
-
-    $this->_entityManager->persist($cart);
-    $this->_entityManager->persist($order);
-    $this->_entityManager->flush();
   }
 }
