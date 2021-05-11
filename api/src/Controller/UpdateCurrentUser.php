@@ -25,15 +25,14 @@ class UpdateCurrentUser
     $this->_security = $security;
   }
 
-  public function __invoke(User $data): User
+  public function __invoke(User $data)
   {
+    //dump($data->getFirstname());die;
+    $firstname = $data->getFirstname();
     // get current user
-    $currentUser = $this->_security->getUser();
+    $user = $this->_security->getUser();
     
-    $userRepository = $this->_entityManager->getRepository(User::class);
-    $user = $userRepository->findOneBy(['id' => $currentUser['id']]);
-
-    $user->setFirstname($data['firstname']);
+    $user->setFirstname($firstname);
 
     $this->_entityManager->persist($user);
     $this->_entityManager->flush();

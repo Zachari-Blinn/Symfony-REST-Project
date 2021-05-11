@@ -26,6 +26,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *              "path"="/user",
  *              "controller"=App\Controller\GetCurrentUser::class,
  *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *          },
+ *          "update_current_user"={
+ *              "method"="PUT",
+ *              "path"="/user/",
+ *              "controller"=App\Controller\UpdateCurrentUser::class,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
  *          }
  *      }
  * )
