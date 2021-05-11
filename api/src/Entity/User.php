@@ -20,6 +20,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *      collectionOperations={
  *          "post"={
  *              "path"="register"
+ *          },
+ *          "get_current_user"={
+ *              "method"="GET",
+ *              "path"="/user",
+ *              "controller"=App\Controller\GetCurrentUser::class,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
  *          }
  *      }
  * )
