@@ -11,7 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(
  *      collectionOperations={
- *          "get",
+ *          "get"={
+ *              "method"="GET",
+ *              "path"="/cart",
+ *              "controller"=App\Controller\GetCurrentCart::class,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *          },
  *          "validate_cart"={
  *              "method"="GET",
  *              "path"="/cart/validate",
@@ -21,7 +26,6 @@ use Doctrine\ORM\Mapping as ORM;
  *          },
  *      },
  *      itemOperations={
- *          "get",
  *          "put",
  *          "patch",
  *          "add_product"={

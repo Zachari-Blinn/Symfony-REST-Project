@@ -84,7 +84,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="author", orphanRemoval=true)
      *
      * @Groups("user:read")
      */

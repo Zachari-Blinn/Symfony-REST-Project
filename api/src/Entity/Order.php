@@ -12,7 +12,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *      normalizationContext={"groups"={"order:read"}},
- *      denormalizationContext={"groups"={"order:write"}}
+ *      denormalizationContext={"groups"={"order:write"}},
+ *      collectionOperations={
+ *          "delete"={
+ *              "method"="delete",
+ *              "path"="/orders",
+ *              "controller"=App\Controller\RemoveAllOrder::class,
+ *              "security"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *          }
+ *      }
  * )
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
@@ -52,6 +60,7 @@ class Order
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
+     * 
      *
      * @Groups("article:read")
      */
