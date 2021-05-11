@@ -17,9 +17,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get", "post"
  *      },
  *      itemOperations={
- *          "get",
+ *          "get"={
+ *              "path" ="product/{id}"
+ *          },
  *          "put",
  *          "patch",
+ *          "delete"
  *      },
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
